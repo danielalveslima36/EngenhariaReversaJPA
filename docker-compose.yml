@@ -1,0 +1,21 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:latest
+    ports:
+     - "5432:5432"
+    volumes:
+     - "$HOME/docker/volumes/postgres:/var/lib/postgresql/data"
+    environment:
+      POSTGRES_PASSWORD: 1234
+  exemplo-webapp:
+    image: ifpbcjz/dac/exemplo-webapp:1.0-SNAPSHOT
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_HOST=postgres
+      - DB_USER=postgres
+      - DB_PASSWORD=1234
+      - DB_NAME=congresso
+    depends_on:
+      - postgres
